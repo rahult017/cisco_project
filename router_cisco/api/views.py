@@ -39,9 +39,10 @@ class RouterDetails(APIView):
 
     
 class Routerfilter(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
         first_ip = request.POST.get('ip')
         second_ip = request.POST.get('ipaddress')
-        querset = Router_Details.objects.filter(Loopback__lte=first_ip,Loopback__gte=second_ip)
+        querset = Router_Details.objects.filter(Loopback__lte=second_ip,Loopback__gte=first_ip)
         serializer = RouterSerializer(querset,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
