@@ -21,6 +21,7 @@ class RouterApi(generics.ListAPIView):
     serializer_class = RouterSerializer
 
 class RouterDetails(APIView):
+    permission_classes = (IsAuthenticated,)
     def post(request,loopback):
         queryset = Router_Details.objects.get(Loopback=loopback)
         data = request.data
@@ -36,3 +37,11 @@ class RouterDetails(APIView):
         serializer = RouterSerializer(router,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+    
+class Routerfilter(APIView):
+    def get(self,request):
+        first_ip = request.POST.get('ip')
+        second_ip = request.POST.get('ipaddress')
+        querset = Router_Details.objects.filter(Loopback__lte=first_ip,Loopback__gte=second_ip)
+        serializer = RouterSerializer(querset,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)

@@ -7,6 +7,6 @@ urlpatterns = [
     path('',views.RouterApi.as_view(),name='router_list'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('api/<str:loopback>/',views.RouterDetails.as_view(),name='edit'),
-    path('api/<int:id>/delete',views.RouterDetails.as_view(),name='delete')
-
+    path('api/<int:id>/delete',views.RouterDetails.as_view(),name='delete'),
+    path('api/',views.Routerfilter.as_view(),name='list'),
 ]
